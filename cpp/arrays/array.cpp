@@ -4,7 +4,8 @@
 #include <stdexcept>
 
 namespace wmartins {
-  Array::Array(int capacity) {
+  template <class T>
+  Array<T>::Array(int capacity) {
     this->size = 0;
     this->capacity = capacity;
 
@@ -13,14 +14,15 @@ namespace wmartins {
      *
      * https://www.stroustrup.com/bs_faq2.html#malloc
      */
-    this->data = new int[capacity];
+    this->data = new T[capacity];
   }
 
   /**
    * TODO: maybe change that to something like EnsureCapacity, otherwise,
    * methods calling Resize must specify conditions.
    */
-  int Array::Resize(int capacity) {
+  template <class T>
+  int Array<T>::Resize(int capacity) {
     this->capacity = capacity;
 
     /**
@@ -28,7 +30,7 @@ namespace wmartins {
      *
      * https://www.stroustrup.com/bs_faq2.html#renew
      */
-    int* data = new int[capacity];
+    T* data = new T[capacity];
     std::copy(this->data, this->data + this->size, data);
     delete[] this->data;
 
@@ -37,29 +39,35 @@ namespace wmartins {
     return 1;
   }
 
-  int Array::GetSize() {
+  template <class T>
+  int Array<T>::GetSize() {
     return this->size;
   }
 
-  int Array::GetCapacity() {
+  template <class T>
+  int Array<T>::GetCapacity() {
     return this->capacity;
   }
 
-  bool Array::IsEmpty() {
+  template <class T>
+  bool Array<T>::IsEmpty() {
     return this->size == 0;
   }
 
-  int Array::GetAt(int index) {
+  template <class T>
+  T Array<T>::GetAt(int index) {
     return this->data[index];
   }
 
-  int Array::Push(int value) {
+  template <class T>
+  int Array<T>::Push(T value) {
     Insert(this->size, value);
 
     return this->size - 1;
   }
 
-  int Array::Insert(int index, int value) {
+  template <class T>
+  int Array<T>::Insert(int index, T value) {
     if (index > this->size) {
       throw std::out_of_range("Index out of range");
     }
@@ -81,7 +89,8 @@ namespace wmartins {
     return 1;
   }
 
-  int Array::Prepend(int value) {
+  template <class T>
+  int Array<T>::Prepend(T value) {
     /**
      * Array:   [ 10, 33, 45, 7, 12, _, _, _ ]
      * Moves:   [ _, 10, 33, 45, 7, 12, _, _ ]
@@ -96,16 +105,18 @@ namespace wmartins {
     return 1;
   }
 
-  int Array::Pop() {
+  template <class T>
+  T Array<T>::Pop() {
     return Delete(this->size - 1);
   }
 
-  int Array::Delete(int index) {
+  template <class T>
+  T Array<T>::Delete(int index) {
     if (index > this->size - 1) {
       throw std::out_of_range("Index out of range");
     }
 
-    int current = GetAt(index);
+    T current = GetAt(index);
     /**
      * Index: 2
      * Array:   [ 10, 33, 45, 7, 12, _, _, _ ]
@@ -129,7 +140,8 @@ namespace wmartins {
     return current;
   }
 
-  int Array::Find(int value) {
+  template <class T>
+  int Array<T>::Find(T value) {
     for (int i = 0; i < this->size; i++) {
       if (this->data[i] == value) {
         return i;

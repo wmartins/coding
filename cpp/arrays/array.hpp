@@ -9,11 +9,12 @@
  * wisely?
  */
 namespace wmartins {
+  template <class T>
   class Array {
     private:
       int size;
       int capacity;
-      int* data;
+      T* data;
       int Resize(int capacity);
 
     public:
@@ -21,13 +22,13 @@ namespace wmartins {
       int GetSize();
       int GetCapacity();
       bool IsEmpty();
-      int GetAt(int index);
-      int Push(int value);
-      int Insert(int index, int value);
-      int Prepend(int value);
-      int Pop();
-      int Delete(int index);
-      int Remove(int value);
-      int Find(int value);
+      T GetAt(int index);
+      int Push(T value);
+      int Insert(int index, T value);
+      int Prepend(T value);
+      T Pop();
+      T Delete(int index);
+      int Remove(T value);
+      int Find(T value);
   };
 }
